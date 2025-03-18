@@ -39,7 +39,6 @@ class Model
             'created_at' => date(DATE_FORMAT)
         ];
 
-        $r = $query->execute($paremeters);
-
+        $query->execute($paremeters);
     }
 }

@@ -49,7 +49,7 @@ class Application
             file_put_contents(ROOT.URL_PUBLIC_FOLDER."/logs.txt", date(DATE_FORMAT).print_r($this, true), FILE_APPEND);
         }
         //Redirect to error page
-        //header('location: ' . URL . 'problem');
+        header('location: ' . URL . 'problem');
     }
 
     private function splitUrl(): void
