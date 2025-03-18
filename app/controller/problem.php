@@ -1,6 +1,6 @@
 <?php
 
-class Problem
+class Problem extends Controller
 {
     /**
      * PAGE: index

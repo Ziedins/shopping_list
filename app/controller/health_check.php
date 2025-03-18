@@ -1,6 +1,6 @@
 <?php
 
-class health_check
+class health_check extends Controller
 {
     /**
      * PAGE: index
