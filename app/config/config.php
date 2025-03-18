@@ -1,6 +1,7 @@
 <?php
 
 const ENVIRONMENT = 'development';
+const DATE_FORMAT = 'Y-m-d H:i:s';
 
 
 ini_set("log_errors", 1);

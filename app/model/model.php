@@ -2,8 +2,6 @@
 
 class Model
 {
-    public const DATE_TIME_FORMAT = "Y-m-d H:i:s";
-
     private ?PDO $db;
 
     /**
@@ -16,5 +14,32 @@ class Model
         } catch (PDOException $e) {
             exit('Database connection could not be established.');
         }
+    }
+
+    public function addItem(string $name, bool $checked = false) : bool|array
+    {
+        $problems = [];
+
+        if(count($problems) == 0) {
+            $this->insertItem($name, $checked);
+
+            return true;
+        }
+
+        return $problems;
+    }
+
+    private function insertItem(string $name, bool $checked) : void {
+        $sql = "INSERT INTO items (name, checked, created_at) VALUES (:name, :checked, :created_at)";
+        $query = $this->db->prepare($sql);
+
+        $paremeters = [
+            ':name' => $name,
+            ':checked' => $checked ? 1 : 0,
+            'created_at' => date(DATE_FORMAT)
+        ];
+
+        $r = $query->execute($paremeters);
+
     }
 }
