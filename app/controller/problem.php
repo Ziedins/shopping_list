@@ -1,6 +1,6 @@
 <?php
 
-class health_check
+class Problem
 {
     /**
      * PAGE: index
@@ -8,6 +8,6 @@ class health_check
      */
     public function index()
     {
-        return 'OK';
+        require APP . 'view/problem/index.php';
     }
 }

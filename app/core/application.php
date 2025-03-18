@@ -12,7 +12,6 @@ class Application
     {
         $this->splitUrl();
 
-        var_dump(file_exists(APP . 'controller/' . $this->url_controller . '.php'));
         if (!is_null($this->url_controller) && file_exists(APP . 'controller/' . $this->url_controller . '.php')) {
             // load controller file if the url has a controller param and if such controller file exists
             // example: if controller would be "car", then this line would translate into: $this->car = new car();
@@ -35,8 +34,22 @@ class Application
                     // no action defined: call the default index() method of a selected controller
                     $this->url_controller->index();
                 }
+                else {
+                   $this->redirect_error();
+                }
             }
+        } else {
+            $this->redirect_error();
         }
+    }
+
+    private function redirect_error()
+    {
+        if (error_reporting()) {
+            file_put_contents(ROOT.URL_PUBLIC_FOLDER."/logs.txt", print_r($this, true), FILE_APPEND);
+        }
+        //Redirect to error page
+        header('location: ' . URL . 'problem');
     }
 
     private function splitUrl(): void

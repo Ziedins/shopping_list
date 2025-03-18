@@ -2,6 +2,7 @@
 
 const ENVIRONMENT = 'development';
 
+
 ini_set("log_errors", 1);
 
 if (ENVIRONMENT == 'development' || ENVIRONMENT == 'dev') {
