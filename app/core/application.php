@@ -25,7 +25,9 @@ class Application
                     // Call the method and pass arguments to it
                     call_user_func_array(array($this->controller, $this->url_action), $this->url_params);
                 } else {
-                    // If no parameters are given, just call the method without parameters, like $this->home->method();
+                    /* If no parameters are given, just call the method without parameters,
+                     can use ReflectionMethod getParameters() to check if params are required
+                    */
                     $this->controller->{$this->url_action}();
                 }
 

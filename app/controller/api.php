@@ -8,10 +8,6 @@ class Api extends Controller
         echo 'No action provided for api';
     }
 
-    /**
-     * @param $params
-     * @return void
-     */
     public function addItem(string $item): void
     {
         if (!isset($_POST)) {
@@ -38,5 +34,44 @@ class Api extends Controller
         }
     }
 
+    public function getItem(string $name): array
+    {
+        $item = $this->model->getItem($name);
+
+        if(!$item) {
+            http_response_code(404);
+            echo 'Item not found';
+            return [];
+        } else {
+            http_response_code(200);
+            return $item;
+        }
+    }
+
+    public function deleteItem(string $name): void
+    {
+        $result = $this->model->deleteItem($name);
+
+        if(!$result) {
+            http_response_code(404);
+            echo 'Item not found';
+        } else {
+            http_response_code(200);
+            echo 'Item deleted';
+        }
+    }
+
+    public function updateItem(string $name, int $checked): void
+    {
+        $result = $this->model->updateItem($name, (bool)$checked);
+
+        if(!$result) {
+            http_response_code(400);
+            echo 'Item not updated';
+        } else {
+            http_response_code(200);
+            echo 'Item updated';
+        }
+    }
 }
 
