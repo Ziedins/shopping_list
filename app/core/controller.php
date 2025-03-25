@@ -24,4 +24,9 @@ class Controller
         require APP . 'model/model.php';
         $this->model = new Model($this->db);
     }
+
+    public function toRefererRoute(): void
+    {
+        header('location: ' . $_SERVER['HTTP_REFERER']);
+    }
 }

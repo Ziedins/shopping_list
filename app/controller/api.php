@@ -8,40 +8,28 @@ class Api extends Controller
         echo 'No action provided for api';
     }
 
-    public function addItem(string $item): void
+    public function addItem(): void
     {
-        if (!isset($_POST)) {
-            http_response_code(404);
-            echo 'addItem endpoint only has POST operation';
-            return;
-        }
+        $result = false;
 
-        $result = $this->model->addItem(
-            $item
-        );
+        if (isset($_POST['name'])) {
+            $result = $this->model->addItem($_POST["name"]);
+        }
 
         if($result === true) {
-            http_response_code(201);
-            echo 'Item added successfully';
-            return;
-        }
-
-        http_response_code(400);
-        echo 'Item not added , issues:'.PHP_EOL;
-
-        foreach ($result as $issue) {
-            if($issue === 1) http_response_code(409);
+            $this->toRefererRoute();
+        } else {
+            http_response_code(500);
         }
     }
 
-    public function getItem(string $name): array
+    public function getItem(string $name): ?array
     {
         $item = $this->model->getItem($name);
 
         if(!$item) {
             http_response_code(404);
-            echo 'Item not found';
-            return [];
+            return null;
         } else {
             http_response_code(200);
             return $item;
@@ -53,24 +41,20 @@ class Api extends Controller
         $result = $this->model->deleteItem($name);
 
         if(!$result) {
-            http_response_code(404);
-            echo 'Item not found';
+            http_response_code(500);
         } else {
-            http_response_code(200);
-            echo 'Item deleted';
+            $this->toRefererRoute();
         }
     }
 
-    public function updateItem(string $name, int $checked): void
+    public function updateItem(string $name): void
     {
-        $result = $this->model->updateItem($name, (bool)$checked);
+        $result = $this->model->updateItem($name, isset($_POST["checked"]));
 
         if(!$result) {
-            http_response_code(400);
-            echo 'Item not updated';
+            http_response_code(500);
         } else {
-            http_response_code(200);
-            echo 'Item updated';
+            $this->toRefererRoute();
         }
     }
 
@@ -80,7 +64,6 @@ class Api extends Controller
 
         if(!$items) {
             http_response_code(404);
-            echo 'Items not found';
 
             return [];
         } else {
