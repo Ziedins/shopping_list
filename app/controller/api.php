@@ -73,5 +73,21 @@ class Api extends Controller
             echo 'Item updated';
         }
     }
+
+    public function getItems(): array
+    {
+        $items = $this->model->getItems();
+
+        if(!$items) {
+            http_response_code(404);
+            echo 'Items not found';
+
+            return [];
+        } else {
+            http_response_code(200);
+
+            return $items;
+        }
+    }
 }
 

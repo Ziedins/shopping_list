@@ -82,4 +82,12 @@ class Model
 
         return true;
     }
+
+    public function getItems() : array {
+        $sql = "SELECT * FROM items";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
