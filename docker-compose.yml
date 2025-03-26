@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  nginx:
+    build: ./Docker/nginx/
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/html/
+
+  app:
+    build: ./Docker/app/
+    expose:
+      - 9000
+    volumes:
+      - .:/var/www/html/
